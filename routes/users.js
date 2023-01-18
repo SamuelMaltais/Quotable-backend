@@ -53,6 +53,16 @@ router.get("/list/", async(req,res) =>{
     }
 })
 
+router.post("/posts/", async(req,res) =>{
+    try{
+        var user = await User.find({userName: req.body.userName})
+        res.json({quotesPosted: user[0].quotesPosted})
+    }
+    catch(err){
+        res.status(400).json({"message": err.message})
+    }
+})
+
 router.post("/", async (req, res) => {
     const user = new User({
         userName: req.body.userName,
