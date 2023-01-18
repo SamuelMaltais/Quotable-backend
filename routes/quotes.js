@@ -3,6 +3,8 @@ const res = require('express/lib/response')
 const router = express.Router()
 const Quote = require('../models/quote')
 const user = require('../models/user')
+const User = require('../models/user')
+const mongoose = require('mongoose')
 
 //Prend tous les quotes
 router.get('/', async (req, res) => {
@@ -14,14 +16,29 @@ router.get('/', async (req, res) => {
     }
 })
 router.post('/', async (req,res) => {
+    var id = mongoose.Types.ObjectId();
     const quote = new Quote({
-        id: Date.now(),
+        _id: id,
         user: req.body.user,
         likes: 0,
         quote: req.body.quote
     })
     try{
-        const newQuote = await quote.save()
+        const userUpdate = await User.find({userName: req.body.user})
+        const quoteExists = await Quote.find({quote: req.body.quote})
+        if(userUpdate == null){
+            res.status(500).json({"message": "cannot find user"})
+        }
+        else if(quoteExists !== null){
+            res.status(400).json({message: "This quote already exists"})
+        }
+        else{
+            const newQuote = await quote.save()
+            var arr = userUpdate.quotesPosted
+            arr.push(req.body.quote)
+            userUpdate.quotesPosted = arr
+            await userUpdate.save()
+        }
         res.status(201).json(newQuote)
     } catch(err) {
         res.status(400).json(err.message)

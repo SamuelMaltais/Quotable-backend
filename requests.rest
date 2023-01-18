@@ -1,7 +1,24 @@
-POST http://localhost:300 HTTP/1.1
+POST http://localhost:300/quotes/ HTTP/1.1
 content-type: application/json
 
 {
-    "name": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+    "user": "bob_leponge21",
+    "quote": "Absolument"
+}
+
+###
+Delete http://localhost:300/quotes/ HTTP/1.1
+content-type: application/json
+
+{
+    "_id": "63c8292991c362577bc86322"
+}
+###
+Post http://localhost:300/users/ HTTP/1.1
+content-type: application/json
+
+{
+    "email": "bobLepong@outlook.com",
+    "userName": "bob_leponge21",
+    "password": "edgyMan 27"
 }
