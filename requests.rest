@@ -2,23 +2,24 @@ POST http://localhost:300/quotes/ HTTP/1.1
 content-type: application/json
 
 {
-    "user": "bob_leponge21",
-    "quote": "Absolument"
+    "user": "Kelvin Chen",
+    "quote": "heeheee"
 }
 
 ###
-Delete http://localhost:300/quotes/ HTTP/1.1
+Post http://localhost:300/quotes/delete/ HTTP/1.1
 content-type: application/json
 
 {
-    "_id": "63c8292991c362577bc86322"
+    "_id": "63c82f806b8edd7533f5deb7"
 }
+
 ###
 Post http://localhost:300/users/ HTTP/1.1
 content-type: application/json
 
 {
     "email": "bobLepong@outlook.com",
-    "userName": "bob_leponge21",
+    "userName": "Kelvin Chen",
     "password": "edgyMan 27"
 }

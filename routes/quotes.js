@@ -29,17 +29,14 @@ router.post('/', async (req,res) => {
         if(userUpdate == null){
             res.status(500).json({"message": "cannot find user"})
         }
-        else if(quoteExists !== null){
+        else if(quoteExists == true){
             res.status(400).json({message: "This quote already exists"})
         }
         else{
-            const newQuote = await quote.save()
-            var arr = userUpdate.quotesPosted
-            arr.push(req.body.quote)
-            userUpdate.quotesPosted = arr
-            await userUpdate.save()
+            userUpdate[0].quotesPosted.push(req.body.quote)
+            userUpdate[0].save()
+            res.status(200).json({message: "Quote posted succesfully"})
         }
-        res.status(201).json(newQuote)
     } catch(err) {
         res.status(400).json(err.message)
     }
@@ -49,9 +46,11 @@ router.get('/:id', async (req, res) => {
     let quote = await Quote.findById(req.params.id)
     res.send(quote.quote)
 })
-router.delete('/:id', getQuote, async(req, res) =>{
+router.post('/delete/', async(req, res) =>{
     try{
-        await res.quote.remove()
+        console.log(req.body)
+        const quote = await Quote.findById(req.body._id)
+        await quote.remove()
         res.json({message: 'Deleted quote'})
     }
     catch(err){
