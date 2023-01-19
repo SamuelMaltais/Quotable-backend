@@ -15,6 +15,7 @@ router.get("/profilePic/:id", async (req, res) => {
     res.status(500).json({"message":err.message})
  }
 })
+
 router.post("/login", async(req, res) =>{
     try{
         var user = await User.find({userName: req.body.userName})
@@ -53,9 +54,9 @@ router.get("/list/", async(req,res) =>{
     }
 })
 
-router.post("/posts/", async(req,res) =>{
+router.get("/posts/:userName", async(req,res) =>{
     try{
-        var user = await User.find({userName: req.body.userName})
+        var user = await User.find({userName: req.params.userName})
         res.json({quotesPosted: user[0].quotesPosted})
     }
     catch(err){
@@ -71,8 +72,15 @@ router.post("/", async (req, res) => {
         quotesPosted: [],
     })
     try{
-        await user.save()
-        res.json({message: 'Created User'})
+        const exists = await User.find({userName: user.userName})
+        console.log(exists)
+        if(exists.length != 0){
+            res.json({message: 'Username Taken'})
+        }
+        else{
+            await user.save()
+            res.json({message: 'Created User'})
+        }  
     }
     catch(err){
         res.json({message: err.message})

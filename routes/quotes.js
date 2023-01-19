@@ -10,7 +10,8 @@ const mongoose = require('mongoose')
 router.get('/', async (req, res) => {
     try{
         const quote = await Quote.find()
-        res.send(quote)
+        console.log(quote)
+        res.json(quote)
     }catch(err){
         res.status(500).json({message: err.message})
     }
@@ -35,6 +36,7 @@ router.post('/', async (req,res) => {
         else{
             userUpdate[0].quotesPosted.push(req.body.quote)
             userUpdate[0].save()
+            quote.save()
             res.status(200).json({message: "Quote posted succesfully"})
         }
     } catch(err) {

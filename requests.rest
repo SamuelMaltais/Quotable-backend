@@ -3,7 +3,7 @@ content-type: application/json
 
 {
     "user": "Kelvin Chen",
-    "quote": "heeheee"
+    "quote": "Money is awesome"
 }
 
 ###
@@ -11,7 +11,15 @@ Post http://localhost:300/quotes/delete/ HTTP/1.1
 content-type: application/json
 
 {
-    "_id": "63c82f806b8edd7533f5deb7"
+    "_id": "63c8139d9f29732b9b68eba4"
+}
+
+###
+Post http://localhost:300/users/delete/ HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "bob_leponge21"
 }
 
 ###
@@ -19,7 +27,31 @@ Post http://localhost:300/users/ HTTP/1.1
 content-type: application/json
 
 {
-    "email": "bobLepong@outlook.com",
+    "email": "kelvin@outlook.com",
+    "userName": "Kelvin Chen",
+    "password": "tehee"
+}
+
+###
+Post http://localhost:300/users/login/ HTTP/1.1
+content-type: application/json
+
+{
     "userName": "Kelvin Chen",
     "password": "edgyMan 27"
+}
+
+###
+Post http://localhost:300/users/posts/ HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "Kelvin Chen"
+}
+###
+Post http://localhost:300/users/delete/ HTTP/1.1
+content-type: application/json
+
+{
+    "userName": "Kelvin Chen"
 }
